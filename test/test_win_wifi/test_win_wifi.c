@@ -24,7 +24,7 @@ FAKE_VOID_FUNC(uart_send_array_nonBlocking, USART_t, uint8_t *, uint16_t);
 
 void setUp(void)
 {
-  wifi_init();
+  wifi_init(NULL);
   RESET_FAKE(uart_init);
   RESET_FAKE(TCP_Received_callback_func);
 }
@@ -46,7 +46,7 @@ void test_wifi_default_callback_func_is_null()
 
 void test_wifi_command_AT_sends_correct_stuff_to_uart()
 {
-  wifi_init();
+  wifi_init(NULL);
   uart_get_rx_callback_fake.return_val = uart_init_fake.arg2_val;
 
   WIFI_ERROR_MESSAGE_t error = wifi_command_AT();

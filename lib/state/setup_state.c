@@ -1,6 +1,7 @@
 #include "setup_state.h"
 #include "wifi.h"
 #include <stdlib.h>
+#include <util/delay.h>
 #include <stdint.h>
 #include <timer.h>
 #include <string.h>

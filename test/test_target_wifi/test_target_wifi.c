@@ -13,7 +13,7 @@
 
 void setUp(void)
 {
-    wifi_init();
+    wifi_init(NULL);
 }
 
 void tearDown(void)

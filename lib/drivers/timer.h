@@ -16,3 +16,5 @@ typedef enum {
 } TIMER_t;
 
 void timer_init(TIMER_t timer, Timer_Callback_t callback, uint16_t frequency);
+
+void timer_stop(TIMER_t timer);

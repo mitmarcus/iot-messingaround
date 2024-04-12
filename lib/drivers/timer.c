@@ -16,6 +16,11 @@ void timer3_init(uint16_t frequency, Timer_Callback_t callback)
     TCCR3B |= (1 << CS32) | (1 << CS30); // Start timer with prescaler 1024
 }
 
+void timer_3_stop()
+{
+    TCCR3B &= ~((1 << CS32) | (1 << CS31) | (1 << CS30)); // Stop the timer
+}
+
 /*
 * @brief Initialize the timer with the given frequency and callback function.
 */
@@ -29,6 +34,19 @@ void timer_init(TIMER_t timer, Timer_Callback_t callback, uint16_t frequency){
         break;
     }
 }
+
+
+void timer_stop(TIMER_t timer){
+    switch (timer)
+    {
+    case TIMER_3:
+        timer_3_stop();
+        break;
+    default:
+        break;
+    }
+}
+
 
 ISR(TIMER3_COMPA_vect)
 {

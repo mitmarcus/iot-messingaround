@@ -202,6 +202,16 @@ void uart_init(USART_t usart, uint32_t baudrate, UART_Callback_t callback)
     sei();
 }
 
+void uart_pc_init(uint32_t baudrate, UART_Callback_t callback)
+{
+    uart_init(USART_0, baudrate, callback);
+}
+
+void uart_pc_send_string_blocking(char *data)
+{
+    uart_send_string_blocking(USART_0, data);
+}
+
 void uart_send_blocking(USART_t usart, uint8_t data)
 {
 

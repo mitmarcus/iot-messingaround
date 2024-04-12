@@ -80,3 +80,6 @@ void uart_send_string_blocking(USART_t usart, char *data);
  */
 UART_Callback_t uart_get_rx_callback(USART_t usart);
 
+void uart_pc_init(uint32_t baudrate, UART_Callback_t callback);
+
+void uart_pc_send_string_blocking(char *data);

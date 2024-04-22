@@ -165,7 +165,7 @@ WIFI_ERROR_MESSAGE_t wifi_command_enable_multiple_connections();
  * @param callback_when_message_received Callback executed when a message is received.
  * @return WIFI_ERROR_MESSAGE_t Error message based on the response from the module.
  */
-WIFI_ERROR_MESSAGE_t wifi_command_setup_server(uint16_t port, WIFI_SERVER_CALLBACK_t callback_when_message_received);
+WIFI_ERROR_MESSAGE_t wifi_command_setup_server(uint16_t port, UART_Callback_t callback_when_message_received);
 
 WIFI_AP_CONNECTION wifi_command_check_AP_connection();
 

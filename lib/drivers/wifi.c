@@ -36,7 +36,7 @@ void wifi_send_command(const char *str, uint16_t timeOut_s)
     char *message = (char *)malloc(strlen(str) + 10);
     strcpy(message, "Sending: ");
     strcat(message, str);
-    uart_pc_send_string_blocking(message); // Send the message to the PC for debugging
+    uart_pc_send_string_blocking((char *)message);
     realloc(message, strlen(str) + 10);
 
     char *sendbuffer = (char *)malloc(128);
@@ -50,7 +50,7 @@ void wifi_send_command(const char *str, uint16_t timeOut_s)
     realloc(sendbuffer, 128);
 
     // better wait sequence...
-    for (uint16_t i = 0; i < 1 * 100UL; i++) // timeout after 20 sec
+    for (uint16_t i = 0; i < timeOut_s * 100UL; i++) // timeout after 20 sec
     {
         _delay_ms(10);
         if (strstr((char *)wifi_dataBuffer, "OK\r\n") != NULL)
@@ -78,7 +78,6 @@ WIFI_ERROR_MESSAGE_t wifi_command(const char *str, uint16_t timeOut_s)
     else
         error = WIFI_ERROR_RECEIVING_GARBAGE;
 
-    uart_pc_send_string_blocking((char *)wifi_dataBuffer);
     wifi_clear_databuffer_and_index();
     return error;
 }
@@ -95,7 +94,7 @@ WIFI_ERROR_MESSAGE_t wifi_command_join_AP(char *ssid, char *password)
          return error;*/
 
     char sendbuffer[128];
-    strcpy(sendbuffer, "AT+CWJAP_DEF=\"");
+    strcpy(sendbuffer, "AT+CWJAP_CUR=\"");
     strcat(sendbuffer, ssid);
     strcat(sendbuffer, "\",\"");
     strcat(sendbuffer, password);
@@ -208,7 +207,6 @@ void static wifi_TCP_callback(uint8_t byte)
                   LENGTH,
                   DATA } state = IDLE;
     static int length = 0, index = 0, prefix_index = 0;
-
     switch (state)
     {
     case IDLE:
@@ -341,7 +339,7 @@ WIFI_ERROR_MESSAGE_t wifi_command_setup_AP(char *ssid, char *password)
     return wifi_command(sendbuffer, 20);
 }
 
-WIFI_ERROR_MESSAGE_t wifi_command_setup_server(uint16_t port, WIFI_SERVER_CALLBACK_t callback_when_message_received)
+WIFI_ERROR_MESSAGE_t wifi_command_setup_server(uint16_t port, UART_Callback_t callback_when_message_received)
 {
     char sendbuffer[128];
     char portString[7];
@@ -353,7 +351,7 @@ WIFI_ERROR_MESSAGE_t wifi_command_setup_server(uint16_t port, WIFI_SERVER_CALLBA
     if (errorMessage != WIFI_OK)
         return errorMessage;
     else
-        uart_init(USART_WIFI, wifi_baudrate, wifi_TCP_callback);
+        uart_init(USART_WIFI, wifi_baudrate, callback_when_message_received);
 
     wifi_clear_databuffer_and_index();
     return errorMessage;
@@ -369,7 +367,7 @@ WIFI_AP_CONNECTION wifi_command_check_AP_connection()
     {
         connection = NO_AP;
     }
-    else if (strstr((char *)wifi_dataBuffer, "OK") != NULL)
+    else if (strstr((char *)wifi_dataBuffer, "OK") != NULL || strstr((char *)wifi_dataBuffer, "WIFI CONNECTED") != NULL)
     {
         connection = CONNECTED;
     }

@@ -1,7 +1,10 @@
+#ifndef WINDOWS_TEST
+#include <util/delay.h>
+#endif
+
 #include "connect_wifi_state.h"
 #include "wifi.h"
 #include <stdlib.h>
-#include <util/delay.h>
 #include <stdint.h>
 #include <timer.h>
 #include <string.h>
@@ -9,8 +12,6 @@
 #include <stdbool.h>
 #include <state_coordinator.h>
 #include <periodic_task.h>
-
-
 
 static char recieveBuffer[128];
 static uint8_t recieveBufferIndex;
@@ -30,7 +31,6 @@ void connect_to_wifi();
 void data_recieve_callback(uint8_t data);
 void clear_buffer();
 void wifi_check_buffer_callback();
-
 
 void connect_to_wifi()
 {
@@ -175,6 +175,7 @@ void wifi_check_buffer_callback()
 
         strcpy(ssid_static, ssid);
         strcpy(password_static, pass);
+        connect_to_wifi();
     }
     clear_buffer();
 }
@@ -204,12 +205,12 @@ State connect_wifi_state_switch(char *ssid, char *pass)
     else
     {
         setup_server(data_recieve_callback, wifi_check_buffer_callback);
-        periodic_task_init_a(connect_to_wifi, 15000);
+        periodic_task_init_a(connect_to_wifi, 60000);
     }
 
     while (!wifi_connected)
     {
-        _delay_ms(1000);
+
     }
 
     return SERVER_CONNECT_STATE;

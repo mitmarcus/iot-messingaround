@@ -1,3 +1,4 @@
+#ifndef  WINDOWS_TEST
 #include "wifi.h"
 #include "includes.h"
 #include "uart.h"
@@ -384,3 +385,6 @@ WIFI_ERROR_MESSAGE_t wifi_command_reset()
 {
     return wifi_command("AT+RST", 20);
 }
+
+
+#endif

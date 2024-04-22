@@ -1,3 +1,5 @@
+#ifndef WINDOWS_TEST
+
 /**
  * @file periodic_task.c
  * @brief Periodic Task Driver implementation for ATmega2560
@@ -12,7 +14,7 @@
 #include "periodic_task.h"
 #include "includes.h"
 
-static void (*user_func_a)(void);  // Pointer to first user function
+static PERIODIC_TASK_CALLBACK user_func_a;  // Pointer to first user function
 static void (*user_func_b)(void);  // Pointer to second user function
 static void (*user_func_c)(void);  // Pointer to third user function
 
@@ -83,8 +85,8 @@ static void init_timer3(){
 }
 
 
-void periodic_task_init_a(void (*user_function_a)(void), uint32_t interval_ms_a) {
-    user_func_a = user_function_a;
+void periodic_task_init_a(PERIODIC_TASK_CALLBACK callback, uint32_t interval_ms_a) {
+    user_func_a = callback;
     init_timer3();
 
     // Calculate the OCR3A value
@@ -136,3 +138,4 @@ float get_exact_interval_a(void) {
     return ((float)(OCR3A + 1) / (F_CPU / 1024)) * 1000.0;
 }
 
+#endif

@@ -11,6 +11,8 @@
 
 #pragma once
 #include <stdint.h>
+
+typedef void (*PERIODIC_TASK_CALLBACK)();
 /**
  * @brief Initialize Timer0 and attach the first user function
  *
@@ -19,7 +21,7 @@
  * @param user_function_a Pointer to the first function to be executed
  * @param interval_ms_a Time interval in milliseconds for the first function
  */
-void periodic_task_init_a(void (*user_function_a)(void), uint32_t interval_ms_a);
+void periodic_task_init_a(PERIODIC_TASK_CALLBACK, uint32_t interval_ms_a);
 
 /**
  * @brief Attach the second user function

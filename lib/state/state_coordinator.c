@@ -1,5 +1,7 @@
 #include "state_coordinator.h"
 #include "connect_wifi_state.h"
+#include "connect_server_state.h"
+#include "working_state.h"
 #include <stddef.h>
 
 void state_coordinator(State state)
@@ -9,9 +11,13 @@ void state_coordinator(State state)
         switch (state)
         {
         case WIFI_CONNECT_STATE:
-            state_coordinator(connect_wifi_state_switch(NULL, NULL));
+            state_coordinator(connect_wifi_state_switch("ssid", "password"));
             break;
         case SERVER_CONNECT_STATE:
+            state_coordinator(connect_server_state_switch("192.168.28.4", 18));
+            break;
+        case WORKING_STATE:
+            state_coordinator(working_state_switch());
             break;
         }
     }
@@ -19,6 +25,5 @@ void state_coordinator(State state)
 
 void start()
 {
-    State state = WIFI_CONNECT_STATE;
-    state_coordinator(state);
+    state_coordinator(WIFI_CONNECT_STATE);
 }

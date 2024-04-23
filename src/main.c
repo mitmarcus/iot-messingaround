@@ -1,17 +1,15 @@
-#include "wifi.h"
-#include <util/delay.h>
-#include <stdlib.h>
-#include <timer.h>
-#include <setup_state.h>
-
+#include <uart.h>
+#include <connect_wifi_state.h>
+#include <stddef.h>
+#include <wifi.h>
+#include <state_coordinator.h>
 int main()
 {
 
   uart_pc_init(9600, NULL);
-  setup_state_init(NULL, NULL);
+  start();
 
   while (1)
   {
-    /* code */
   }
 }

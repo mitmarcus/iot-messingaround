@@ -1,4 +1,4 @@
-
+#ifndef WINDOWS_TEST
 
 #include "includes.h"
 #include "timer.h"
@@ -55,3 +55,5 @@ ISR(TIMER3_COMPA_vect)
         timer_callback_3();
     }
 }
+
+#endif

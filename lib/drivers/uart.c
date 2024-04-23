@@ -1,5 +1,6 @@
-#ifndef EXCLUDE_UART
+#ifndef WINDOWS_TEST
 
+#ifndef EXCLUDE_UART
 
 #include "uart.h"
 #include <stdint.h>
@@ -428,3 +429,5 @@ ISR(USART3_UDRE_vect)
 #endif
 
 #endif//EXCLUDE_UART
+
+#endif//WINDOWS_TEST

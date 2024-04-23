@@ -4,7 +4,7 @@
 static uint8_t current_hour = 10;   // Current hour (0-23)
 static uint8_t current_minute = 10; // Current minute (0-59)
 
-void display_time()
+void clock_display_time()
 {
     uint8_t seg1 = current_hour / 10;   // First digit of the hour
     uint8_t seg2 = current_hour % 10;   // Second digit of the hour

@@ -25,5 +25,6 @@ void state_coordinator(State state)
 
 void start()
 {
-    state_coordinator(WIFI_CONNECT_STATE);
+    display_time();
+    state_coordinator(WORKING_STATE);
 }

@@ -10,7 +10,7 @@ int main()
 
   uart_pc_init(9600, NULL);
   display_init();
-  initialize_clock();
+  clock_init();
   start();
 
   while (1)

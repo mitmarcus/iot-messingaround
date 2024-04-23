@@ -6,7 +6,6 @@
 #include "wifi.h"
 #include <stdlib.h>
 #include <stdint.h>
-#include <timer.h>
 #include <string.h>
 #include <utils.h>
 #include <stdbool.h>

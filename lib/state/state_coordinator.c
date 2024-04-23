@@ -25,6 +25,6 @@ void state_coordinator(State state)
 
 void start()
 {
-    display_time();
+    clock_display_time();
     state_coordinator(WORKING_STATE);
 }

@@ -1,5 +1,7 @@
 void init();
 
-const char *LINE_TERMINATOR = "\r\n"; 
+const char *LINE_TERMINATOR = "\r\n";
 
-char* ccp_create_request(char* at, char* body);
+char *ccp_create_request(char *at, char *body);
+
+char *ccp_parse_response();

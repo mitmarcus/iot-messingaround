@@ -4,7 +4,7 @@
 #include <unity_internals.h>
 #include <stdlib.h>
 #include "connect_wifi_state.h"
-#include "../fff.h"
+#include "../../fff.h"
 #include <wifi.h>
 #include <periodic_task.h>
 #include <state_coordinator.h>
@@ -25,11 +25,6 @@ FAKE_VOID_FUNC2(uart_pc_init, uint32_t, UART_Callback_t);
 
 FAKE_VOID_FUNC(periodic_task_init_a, PERIODIC_TASK_CALLBACK, uint32_t);
 
-void _delay_ms(uint32_t ms)
-{
-  return;
-}
-
 void starting_with_specified_credentials_finishes_the_state()
 {
   wifi_command_check_AP_connection_fake.return_val = CONNECTED;
@@ -44,21 +39,4 @@ void starting_with_null_credentials_finishes_the_state_if_is_already_connected_t
   State state = connect_wifi_state_switch(NULL, NULL);
   TEST_ASSERT_EQUAL(SERVER_CONNECT_STATE, state);
   RESET_FAKE(wifi_command_check_AP_connection);
-}
-
-int main(void)
-{
-  UNITY_BEGIN();
-  RUN_TEST(starting_with_specified_credentials_finishes_the_state);
-  RUN_TEST(starting_with_null_credentials_finishes_the_state_if_is_already_connected_to_wifi);
-  return UNITY_END();
-}
-
-void tearDown(void)
-{
-  // clean stuff up here
-}
-
-void setUp(void)
-{
 }

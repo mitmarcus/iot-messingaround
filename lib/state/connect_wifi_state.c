@@ -185,7 +185,7 @@ State connect_wifi_state_switch(char *ssid, char *pass)
     wifi_init(NULL);
 
     wifi_command_reset();
-  //  _delay_ms(5000);
+    //_delay_ms(5000);
 
     wifi_command_set_mode_to_1();
     // If ssid and pass are not NULL, then the device tries to connect to the wifi
@@ -210,7 +210,6 @@ State connect_wifi_state_switch(char *ssid, char *pass)
 
     while (!wifi_connected)
     {
-
     }
 
     return SERVER_CONNECT_STATE;

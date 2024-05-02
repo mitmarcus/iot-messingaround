@@ -27,7 +27,6 @@ FAKE_VOID_FUNC(periodic_task_init_a, PERIODIC_TASK_CALLBACK, uint32_t);
 
 void starting_with_specified_credentials_finishes_the_state()
 {
-  TEST_ASSERT_EQUAL(1, 1);
   wifi_command_check_AP_connection_fake.return_val = CONNECTED;
   State state = connect_wifi_state_switch("ssid", "pass");
   TEST_ASSERT_EQUAL(SERVER_CONNECT_STATE, state);
@@ -36,11 +35,8 @@ void starting_with_specified_credentials_finishes_the_state()
 
 void starting_with_null_credentials_finishes_the_state_if_is_already_connected_to_wifi()
 {
-  TEST_ASSERT_EQUAL(1, 1);
-  
-    wifi_command_check_AP_connection_fake.return_val = CONNECTED;
-    State state = connect_wifi_state_switch(NULL, NULL);
-    TEST_ASSERT_EQUAL(SERVER_CONNECT_STATE, state);
-    RESET_FAKE(wifi_command_check_AP_connection);
-    
+  wifi_command_check_AP_connection_fake.return_val = CONNECTED;
+  State state = connect_wifi_state_switch(NULL, NULL);
+  TEST_ASSERT_EQUAL(SERVER_CONNECT_STATE, state);
+  RESET_FAKE(wifi_command_check_AP_connection);
 }

@@ -19,3 +19,9 @@ jobs:
           python-version: '3.9'
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
+      - name: Run windows tests
+        run: platformio test -e win_test
+      - name: Run target tests
+        run: platformio test -e target_run
+      - name: Build default
+        run: platformio run 

@@ -5,6 +5,8 @@ name: CI
 on:
   push:
     branches: [main]
+    tags:
+      - "*"
   pull_request:
     branches: [main]
 
@@ -35,5 +37,5 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          artifacts: ".pio/build/target_run/firmware.bin,.pio/build/target_run/firmware.elf,.pio/build/target_run/firmware.hex"
-      
+          path: .pio/build/target_run/
+          name: firmware.bin

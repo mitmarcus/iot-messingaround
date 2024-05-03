@@ -35,5 +35,5 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          path: .pio/build/target_run/
-          name: firmware.bin
+          artifacts: ".pio/build/target_run/firmware.bin,.pio/build/target_run/firmware.elf,.pio/build/target_run/firmware.hex"
+      

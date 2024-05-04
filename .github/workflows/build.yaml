@@ -45,7 +45,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-           name: Bump version
           default_bump: "patch"
           skip_on_empty: true
 

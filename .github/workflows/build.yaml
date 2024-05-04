@@ -47,12 +47,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
         with:
-          tag_name: ${{ steps.version_bump.outputs.new_tag }}  
-          files: ".pio/build/target_run/firmware.*"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: .pio/build/target_run/firmware.*
+          tag: ${{ steps.version_bump.outputs.new_tag }}  
+          generateReleaseNotes: true
 
 

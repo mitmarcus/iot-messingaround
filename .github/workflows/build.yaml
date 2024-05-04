@@ -5,8 +5,10 @@ on:
     branches:
       - main
     tags:
-      - "major"
-      - "minor"
+      - "refs/tags/major" # Exact tag name 'major'
+      - "refs/tags/minor" # Exact tag name 'minor'
+      - "refs/tags/patch" # Exact tag name 'patch'
+      - "refs/tags/none"
 
 jobs:
   release:

@@ -5,13 +5,21 @@ on:
     branches:
       - main
     tags:
-      - 'major'
-      - 'minor'
-      - 'patch'
-      - 'none'
-      
-    
+      - '*'
+
 jobs:
+  validate_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check valid tag
+        run: |
+          VALID_TAGS="major minor patch none"
+          CURRENT_TAG="${{ github.ref_name }}"
+          if ! [[ " $VALID_TAGS " =~ " $CURRENT_TAG " ]]; then
+            echo "Invalid tag: $CURRENT_TAG"
+            exit 1
+          fi
+
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -37,8 +45,7 @@ jobs:
         run: pip install --upgrade platformio
       - name: Build default
         run: platformio run
-  release:
-    steps:
+        
       - name: Bump version
         id: version_bump  
         uses: anothrNick/github-tag-action@v1

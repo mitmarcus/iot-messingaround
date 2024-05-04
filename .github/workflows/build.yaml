@@ -42,12 +42,10 @@ jobs:
       - name: Bump version
         id: version_bump  
         uses: anothrNick/github-tag-action@v1
-        with:
-          WITH_V: true
-          DEFAULT_BUMP: "patch"
-          skip_on_empty: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: "patch"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

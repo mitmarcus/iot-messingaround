@@ -42,5 +42,5 @@ jobs:
         with:
           artifacts: .pio/build/target_run/firmware.bin
           tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          generateReleaseNotes: true
 

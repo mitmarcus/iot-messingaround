@@ -11,6 +11,8 @@
 #include <stdbool.h>
 #include <state_coordinator.h>
 #include <periodic_task.h>
+#include "logger.h"
+
 
 static char recieveBuffer[128];
 static uint8_t recieveBufferIndex;
@@ -33,8 +35,8 @@ void wifi_check_buffer_callback();
 
 void connect_to_wifi()
 {
-    uart_pc_send_string_blocking(ssid_static);
-    uart_pc_send_string_blocking(password_static);
+    log_debug(ssid_static);
+    log_debug(password_static);
     WIFI_ERROR_MESSAGE_t result = wifi_command_join_AP(ssid_static, password_static);
     if (result != WIFI_OK)
     {
@@ -137,10 +139,10 @@ void wifi_check_buffer_callback()
     char *ssidString = strstr((char *)recieveBuffer, "ssid:");
     char *passString = strstr((char *)recieveBuffer, "pass:");
 
-    uart_pc_send_string_blocking((char *)recieveBuffer);
+    log_debug((char *)recieveBuffer);
     if (ssidString != NULL && passString != NULL)
     {
-        uart_pc_send_string_blocking("ssid and pass found");
+        log_debug("ssid and pass found");
         int lengthTerminatorIndex = utils_find_char_index_in_string(ssidString, ';');
         int passTerminatorIndex = utils_find_char_index_in_string(passString, ';');
 
@@ -179,7 +181,7 @@ void wifi_check_buffer_callback()
 
 State connect_wifi_state_switch(char *ssid, char *pass)
 {
-    uart_pc_send_string_blocking("Entered connect wifi state");
+    log_debug("Entered connect wifi state");
     wifi_init(NULL);
 
     // wifi_command_reset();
@@ -197,7 +199,7 @@ State connect_wifi_state_switch(char *ssid, char *pass)
     // Check if the device is already connected to the AP
     if (wifi_command_check_AP_connection() == CONNECTED)
     {
-        uart_pc_send_string_blocking("Connected to wifi");
+        log_debug("Connected to wifi");
         return SERVER_CONNECT_STATE;
     }
     // If not connected to an AP, start a server and wait for ssid and pass
@@ -211,7 +213,7 @@ State connect_wifi_state_switch(char *ssid, char *pass)
     {
     }
     periodic_task_init_a(NULL, 60000);
-    uart_pc_send_string_blocking("Connected to wifi");
+    log_debug("Connected to wifi");
 
     return SERVER_CONNECT_STATE;
 }

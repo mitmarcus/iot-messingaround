@@ -5,7 +5,6 @@
 
 const char *LINE_TERMINATOR = "\r\n";
 
-
 // char *ccp_create_request(char *at, char *body)
 // {
 //     int length_of_message = strlen(body);
@@ -54,7 +53,6 @@ char *ccp_parse_response(char *response, char *status_buffer, int status_buffer_
 
 const char *status_code_to_string(CCP_STATUS_CODE code);
 
-
 void ccp_create_request(char *at, char *body, char *request)
 {
     int length_of_message = strlen(body);
@@ -84,17 +82,35 @@ void ccp_create_response(char *response, char *at, CCP_STATUS_CODE code, char *b
 }
 
 const char *status_code_strings[] = {
-    [CCP_OK] = "1",
-    [CCP_SERVER_ERROR] = "2",
-    [CCP_BAD_REQUEST] = "0",
-    [CCP_UNAUTHENTICATED] = "3",
-    [CCP_NUM_STATUS_CODES] = "Unknown" // Default string for unknown status codes
+    [CCP_STATUS_OK] = "1",
+    [CCP_STATUS_SERVER_ERROR] = "2",
+    [CCP_STATUS_BAD_REQUEST] = "0",
+    [CCP_STATUS_UNAUTHENTICATED] = "3",
+    [CCP_STATUS_NUM_STATUS_CODES] = "Unknown" // Default string for unknown status codes
 };
 
 const char *status_code_to_string(CCP_STATUS_CODE code)
 {
-    if (code >= 0 && code < CCP_NUM_STATUS_CODES)
+    if (code >= 0 && code < CCP_STATUS_NUM_STATUS_CODES)
         return status_code_strings[code];
     else
-        return status_code_strings[CCP_NUM_STATUS_CODES]; // Return the default string
+        return status_code_strings[CCP_STATUS_NUM_STATUS_CODES]; // Return the default string
+}
+
+CCP_ACTION_TYPE ccp_at_from_str(char *action_type)
+{
+    char at[3];
+    snprintf(at, sizeof at, "%.3s", action_type);
+    at[3] = '\0';
+    if (strcmp(at, "TM") == 0)
+    {
+        return CCP_AT_TM;
+    }
+    else if (strcmp(at, "MS") == 0)
+    {
+        return CCP_AT_MS;
+    }
+    else{
+        return CCP_AT_UNKNOWN;
+    }
 }

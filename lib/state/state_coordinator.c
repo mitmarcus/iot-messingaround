@@ -6,15 +6,15 @@
 
 void state_coordinator(State state)
 {
-    char *ip = "192.168.1.207";
-    int port = 90;
+    char *ip = "192.168.43.130";
+    int port = 8080;
 
     while (1)
     {
         switch (state)
         {
         case WIFI_CONNECT_STATE:
-            state_coordinator(connect_wifi_state_switch("Waoo4920_YNSY", "mfdp4883"));
+            state_coordinator(connect_wifi_state_switch("hi123", "kacenka123"));
             break;
         case SERVER_CONNECT_STATE:
             state_coordinator(connect_server_state_switch(ip, port));

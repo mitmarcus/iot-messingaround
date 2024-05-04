@@ -3,6 +3,7 @@
 #include "includes.h"
 #include "uart.h"
 #include <stdbool.h>
+#include "logger.h"
 #define WIFI_DATABUFFERSIZE 128
 static uint8_t wifi_dataBuffer[WIFI_DATABUFFERSIZE];
 static uint8_t wifi_dataBufferIndex;
@@ -38,7 +39,7 @@ void wifi_send_command(const char *str, uint16_t timeOut_s)
     char *message = (char *)malloc(strlen(str) + 10);
     strcpy(message, "Sending: ");
     strcat(message, str);
-    // uart_pc_send_string_blocking((char *)message);
+    log_debug((char *)message);
     realloc(message, strlen(str) + 10);
 
     char *sendbuffer = (char *)malloc(128);
@@ -58,7 +59,7 @@ void wifi_send_command(const char *str, uint16_t timeOut_s)
         if (strstr((char *)wifi_dataBuffer, "OK\r\n") != NULL)
             break;
     }
-    //uart_pc_send_string_blocking((char *)wifi_dataBuffer);
+    log_debug((char *)wifi_dataBuffer);
     uart_init(USART_WIFI, wifi_baudrate, callback_state);
 }
 

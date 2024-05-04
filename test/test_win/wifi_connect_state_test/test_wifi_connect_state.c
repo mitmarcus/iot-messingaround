@@ -9,6 +9,7 @@
 #include <periodic_task.h>
 #include <state_coordinator.h>
 #include <uart.h>
+#include "logger.h"
 
 FAKE_VALUE_FUNC0(WIFI_ERROR_MESSAGE_t, wifi_command_set_mode_to_1);
 FAKE_VALUE_FUNC0(WIFI_ERROR_MESSAGE_t, wifi_command_set_mode_to_2);
@@ -21,8 +22,8 @@ FAKE_VALUE_FUNC2(WIFI_ERROR_MESSAGE_t, wifi_command_setup_server, uint16_t, UART
 FAKE_VOID_FUNC1(wifi_init, UART_Callback_t);
 FAKE_VALUE_FUNC0(WIFI_AP_CONNECTION, wifi_command_check_AP_connection);
 
-FAKE_VOID_FUNC(uart_pc_send_string_blocking, char *);
-FAKE_VOID_FUNC2(uart_pc_init, uint32_t, UART_Callback_t);
+FAKE_VOID_FUNC(log_debug, char *);
+FAKE_VOID_FUNC(log_info, char *);
 
 FAKE_VOID_FUNC(periodic_task_init_a, PERIODIC_TASK_CALLBACK, uint32_t);
 

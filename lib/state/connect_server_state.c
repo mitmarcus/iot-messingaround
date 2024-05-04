@@ -2,8 +2,6 @@
 #include <connect_server_state.h>
 #include <wifi.h>
 #include <stddef.h>
-#include <ccp_message_handler.h>
-
 
 void nothing(){
     

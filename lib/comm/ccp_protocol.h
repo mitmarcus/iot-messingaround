@@ -12,3 +12,5 @@ typedef enum
 void ccp_create_request(char *at, char *body, char *request);
 
 void ccp_create_response(char *response, char *at, CCP_STATUS_CODE code, char *body);
+
+char *ccp_parse_response(char *response, char *status_buffer, int status_buffer_size);

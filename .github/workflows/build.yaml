@@ -9,7 +9,7 @@ on:
 
 jobs:
   release:
-    if: contains(github.event.head_commit.message, '#major') || contains(github.event.head_commit.message, '#minor') || contains(github.event.head_commit.message, '#patch')
+    if: contains(github.event.head_commit.message, '#major') || contains(github.event.head_commit.message, '#minor') || contains(github.event.head_commit.message, '#patch') || contains(github.event.head_commit.message, '#none')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -41,6 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          DEFAULT_BUMP: patch
 
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
@@ -48,3 +49,4 @@ jobs:
           artifacts: .pio/build/target_run/firmware.*
           tag: ${{ steps.version_bump.outputs.new_tag }}
           generateReleaseNotes: true
+          allowUpdates: true

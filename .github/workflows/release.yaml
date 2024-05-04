@@ -1,20 +1,15 @@
 name: Release
 
-on: 
-  pull_request:
-    types:
-      - closed
+on:
+  push:
     branches:
       - main
     tags:
-      - major
-      - minor
-      - patch
-      - none
-      
-    
+      - "*"
+
 jobs:
-  build:
+  release:
+    if: contains(github.event.head_commit.message, '#major') || contains(github.event.head_commit.message, '#minor') || contains(github.event.head_commit.message, '#patch')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -33,25 +28,24 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: "3.9"
 
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
       - name: Build default
         run: platformio run
-        
+
       - name: Bump version
-        id: version_bump  
+        id: version_bump
         uses: anothrNick/github-tag-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          DEFAULT_BUMP: patch
 
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
           artifacts: .pio/build/target_run/firmware.*
-          tag: ${{ steps.version_bump.outputs.new_tag }}  
+          tag: ${{ steps.version_bump.outputs.new_tag }}
           generateReleaseNotes: true
-
-

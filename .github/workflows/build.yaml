@@ -5,10 +5,10 @@ on:
     branches:
       - main
     tags:
-      - 'major'
-      - 'minor'
-      - 'patch'
-      - 'none'
+      - '*major*'
+      - '*minor*'
+      - '*patch*'
+      - '*none*'
       
     
 jobs:
@@ -37,7 +37,8 @@ jobs:
         run: pip install --upgrade platformio
       - name: Build default
         run: platformio run
-        
+  release:
+    steps:
       - name: Bump version
         id: version_bump  
         uses: anothrNick/github-tag-action@v1

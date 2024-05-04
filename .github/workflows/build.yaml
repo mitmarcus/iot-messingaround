@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    - main
   pull_request:
     types:
       - closed

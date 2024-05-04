@@ -11,6 +11,8 @@
 #include <stdbool.h>
 #include <state_coordinator.h>
 #include <periodic_task.h>
+#include "logger.h"
+
 
 static char recieveBuffer[128];
 static uint8_t recieveBufferIndex;
@@ -33,9 +35,8 @@ void wifi_check_buffer_callback();
 
 void connect_to_wifi()
 {
-    wifi_command_set_mode_to_1();
-    uart_pc_send_string_blocking(ssid_static);
-    uart_pc_send_string_blocking(password_static);
+    log_debug(ssid_static);
+    log_debug(password_static);
     WIFI_ERROR_MESSAGE_t result = wifi_command_join_AP(ssid_static, password_static);
     if (result != WIFI_OK)
     {
@@ -49,7 +50,6 @@ void connect_to_wifi()
 
 void setup_server(RecieveDataCallback callback, DataRecievedCallback data_recieve_callback)
 {
-    wifi_command_set_mode_to_2();
     wifi_command_setup_AP("SEP4-SmartClock", "MHDK2024");
     wifi_command_enable_multiple_connections();
     recieveBufferIndex = 0;
@@ -139,10 +139,10 @@ void wifi_check_buffer_callback()
     char *ssidString = strstr((char *)recieveBuffer, "ssid:");
     char *passString = strstr((char *)recieveBuffer, "pass:");
 
-    uart_pc_send_string_blocking((char *)recieveBuffer);
+    log_debug((char *)recieveBuffer);
     if (ssidString != NULL && passString != NULL)
     {
-        uart_pc_send_string_blocking("ssid and pass found");
+        log_debug("ssid and pass found");
         int lengthTerminatorIndex = utils_find_char_index_in_string(ssidString, ';');
         int passTerminatorIndex = utils_find_char_index_in_string(passString, ';');
 
@@ -181,12 +181,13 @@ void wifi_check_buffer_callback()
 
 State connect_wifi_state_switch(char *ssid, char *pass)
 {
+    log_debug("Entered connect wifi state");
     wifi_init(NULL);
 
-    wifi_command_reset();
+    // wifi_command_reset();
     //_delay_ms(5000);
 
-    wifi_command_set_mode_to_1();
+    wifi_command_set_mode_to_3();
     // If ssid and pass are not NULL, then the device tries to connect to the wifi
     if (ssid != NULL && pass != NULL)
     {
@@ -198,6 +199,7 @@ State connect_wifi_state_switch(char *ssid, char *pass)
     // Check if the device is already connected to the AP
     if (wifi_command_check_AP_connection() == CONNECTED)
     {
+        log_debug("Connected to wifi");
         return SERVER_CONNECT_STATE;
     }
     // If not connected to an AP, start a server and wait for ssid and pass
@@ -210,6 +212,8 @@ State connect_wifi_state_switch(char *ssid, char *pass)
     while (!wifi_connected)
     {
     }
+    periodic_task_init_a(NULL, 60000);
+    log_debug("Connected to wifi");
 
     return SERVER_CONNECT_STATE;
 }

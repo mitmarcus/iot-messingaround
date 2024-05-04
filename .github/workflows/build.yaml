@@ -39,7 +39,6 @@ jobs:
 
       - name: Build default
         run: platformio run
-
       - name: Bump version
         id: version_bump  
         uses: anothrNick/github-tag-action@v1

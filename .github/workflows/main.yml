@@ -16,12 +16,18 @@ jobs:
           key: ${{ runner.os }}-pio
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: "3.9"
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
+
+      - name: Install PlatformIO packages
+        run: |
+          pio pkg install -p framework-arduino-avr@5.2.0
+          pio pkg install -p toolchain-atmelavr@1.70300.191015
+
       - name: Run windows tests
         run: platformio test -e win_test
       - name: Run target tests
         run: platformio test -e target_run
       - name: Build default
-        run: platformio run 
+        run: platformio run

@@ -5,10 +5,10 @@ on:
     branches:
       - main
     tags:
-      - major
-      - minor
-      - patch
-      - none
+      - 'major'
+      - 'minor'
+      - 'patch'
+      - 'none'
       
     
 jobs:

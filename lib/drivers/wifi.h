@@ -11,6 +11,7 @@
 #pragma once
 #include <stdint.h>
 #include "uart.h"
+#include <stdbool.h>
 
 /**
  * @brief Define which USART module is used for WiFi communication.
@@ -170,3 +171,5 @@ WIFI_ERROR_MESSAGE_t wifi_command_setup_server(uint16_t port, UART_Callback_t ca
 WIFI_AP_CONNECTION wifi_command_check_AP_connection();
 
 WIFI_ERROR_MESSAGE_t wifi_command_reset();
+
+WIFI_ERROR_MESSAGE_t wifi_command_set_mode_to_3();

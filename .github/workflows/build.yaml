@@ -22,14 +22,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.cache/pip
             ~/.platformio/.cache
           key: ${{ runner.os }}-pio
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
       - name: Install PlatformIO Core
@@ -37,10 +37,22 @@ jobs:
       - name: Build default
         run: platformio run 
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.14.0
+      - name: Bump version
+        id: version
+        uses: anothrNick/github-tag-action@v1
         with:
-          artifacts: .pio/build/target_run/firmware.bin, .pio/build/target_run/firmware.elf, .pio/build/target_run/firmware.hex
-          tag: v1.0.${{ github.run_number }}
-          generateReleaseNotes: true
+          custom_tag: |
+            echo "v1.0.${{ github.run_number }}"
+          default_bump: "patch"
+          skip_on_empty: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ".pio/build/target_run/firmware.*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
 

@@ -1,16 +1,15 @@
-name: CI
+name: Release
 
-on:
+on: 
   push:
     branches:
       - main
     tags:
-      - '*'
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
+      - major
+      - minor
+      - patch
+      - none
+      
     
 jobs:
   build:

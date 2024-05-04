@@ -20,7 +20,8 @@ jobs:
             exit 1
           fi
 
-  build:
+  release:
+    needs: validate_tag
     runs-on: ubuntu-latest
     permissions:
       contents: write

@@ -1,20 +1,14 @@
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
-  push:
-    branches:
-      - main
-      - master
   pull_request:
+    types:
+      - closed
     branches:
       - main
-      - master
     
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  if: github.event.pull_request.merged == true
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -47,13 +41,6 @@ jobs:
           WITH_V: true
           default_bump: "patch"
           skip_on_empty: true
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "build/*"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

@@ -1,5 +1,4 @@
 #pragma once
-#define F_CPU 16000000UL /* Define CPU Frequency */
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -17,8 +16,8 @@
 void lcd_command(unsigned char cmnd);
 void lcd_char(unsigned char char_data);
 void lcd_init(void);
-void lcd_string(char *str);
-void lcd_string_xy(char row, char pos, char *str);
+void lcd_string(const char *str);
+void lcd_string_xy(char row, char pos, const char *str);
 void lcd_clear(void);
 void lcd_two_rows(const char *row1_text, char row1_pos, const char *row2_text, char row2_pos);
 void lcd_static_with_scroll(const char *static_text, const char *scroll_text, uint16_t delay, int cycles);

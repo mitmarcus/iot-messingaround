@@ -1,0 +1,53 @@
+name: Release
+
+on: 
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    tags:
+      - '*'
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+      - name: Build default
+        run: platformio run
+        
+      - name: Bump version
+        id: version_bump  
+        uses: anothrNick/github-tag-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: .pio/build/target_run/firmware.*
+          tag: ${{ steps.version_bump.outputs.new_tag }}  
+          generateReleaseNotes: true
+
+

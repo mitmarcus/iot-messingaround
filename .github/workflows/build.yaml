@@ -19,6 +19,8 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -41,10 +43,8 @@ jobs:
         id: version
         uses: anothrNick/github-tag-action@v1
         with:
-          custom_tag: |
-            echo "v1.0.${{ github.run_number }}"
-          default_bump: "patch"
-          skip_on_empty: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1

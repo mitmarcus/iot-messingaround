@@ -36,7 +36,6 @@ jobs:
 
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
-
       - name: Build default
         run: platformio run
         

@@ -1,5 +1,8 @@
 # IoT Device
 
+[![Tests](https://github.com/SEP4Y-S24/iot/actions/workflows/build.yaml/badge.svg)](https://github.com/SEP4Y-S24/iot/actions/workflows/build.yaml)
+![GitHub Latest Release)](https://img.shields.io/github/v/release/SEP4Y-S24/iot?logo=github)
+
 ## Specifications
 
 - Arduino ATMega2560

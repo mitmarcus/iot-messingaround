@@ -1,4 +1,4 @@
-name: PlatformIO CI
+name: Tests
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
           key: ${{ runner.os }}-pio
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: "3.9"
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
       - name: Run windows tests
@@ -24,4 +24,4 @@ jobs:
       - name: Run target tests
         run: platformio test -e target_run
       - name: Build default
-        run: platformio run 
+        run: platformio run

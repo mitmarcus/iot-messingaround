@@ -1,5 +1,7 @@
 # IoT Device
 
+[![Release](https://github.com/SEP4Y-S24/iot/actions/workflows/release.yaml/badge.svg?event=release)](https://github.com/SEP4Y-S24/iot/actions/workflows/release.yaml)
+
 ## Specifications
 
 - Arduino ATMega2560

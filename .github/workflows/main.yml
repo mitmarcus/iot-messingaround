@@ -22,8 +22,8 @@ jobs:
 
       - name: Install PlatformIO packages
         run: |
-          pio pkg install -p framework-arduino-avr@5.2.0
-          pio pkg install -p toolchain-atmelavr@1.70300.191015
+          pio pkg install -p framework-arduino-avr@latest
+          pio pkg install -p toolchain-atmelavr@latest
 
       - name: Run windows tests
         run: platformio test -e win_test

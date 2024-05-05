@@ -22,7 +22,7 @@ jobs:
 
       - name: Build default
         run: platformio run
-      - name: Run windows tests
-        run: platformio test -e win_test
       - name: Run target tests
         run: platformio test -e target_run
+      - name: Run windows tests
+        run: platformio test -e win_test

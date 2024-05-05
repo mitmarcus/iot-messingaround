@@ -16,7 +16,7 @@ int main()
 {
 	log_init();
 	display_init();
-	lcd_init();
+	external_screen_init();
 	clock_init();
 	wifi_init(NULL);
 	wifi_command_reset(); // reset the module. Because sometimes it just makes it work -_('o')_-  Software development at its best.

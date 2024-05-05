@@ -1,7 +1,9 @@
-#ifndef  WINDOWS_TEST
+#ifndef WINDOWS_TEST
 #include "wifi.h"
 #include "includes.h"
 #include "uart.h"
+#include <stdbool.h>
+#include "logger.h"
 #define WIFI_DATABUFFERSIZE 128
 static uint8_t wifi_dataBuffer[WIFI_DATABUFFERSIZE];
 static uint8_t wifi_dataBufferIndex;
@@ -37,7 +39,7 @@ void wifi_send_command(const char *str, uint16_t timeOut_s)
     char *message = (char *)malloc(strlen(str) + 10);
     strcpy(message, "Sending: ");
     strcat(message, str);
-    uart_pc_send_string_blocking((char *)message);
+    log_debug((char *)message);
     realloc(message, strlen(str) + 10);
 
     char *sendbuffer = (char *)malloc(128);
@@ -57,7 +59,7 @@ void wifi_send_command(const char *str, uint16_t timeOut_s)
         if (strstr((char *)wifi_dataBuffer, "OK\r\n") != NULL)
             break;
     }
-    uart_pc_send_string_blocking((char *)wifi_dataBuffer);
+    log_debug((char *)wifi_dataBuffer);
     uart_init(USART_WIFI, wifi_baudrate, callback_state);
 }
 
@@ -272,7 +274,10 @@ void static wifi_TCP_callback(uint8_t byte)
             index = 0;
 
             wifi_clear_databuffer_and_index();
-            callback_when_message_received_static();
+            if (callback_when_message_received_static != NULL)
+            {
+                callback_when_message_received_static();
+            }
         }
         break;
     }
@@ -310,7 +315,7 @@ WIFI_ERROR_MESSAGE_t wifi_command_TCP_transmit(uint8_t *data, uint16_t length)
     sprintf(portString, "%u", length);
     strcat(sendbuffer, portString);
 
-    WIFI_ERROR_MESSAGE_t errorMessage = wifi_command(sendbuffer, 20);
+    WIFI_ERROR_MESSAGE_t errorMessage = wifi_command(sendbuffer, 10);
     if (errorMessage != WIFI_OK)
         return errorMessage;
 
@@ -321,6 +326,11 @@ WIFI_ERROR_MESSAGE_t wifi_command_TCP_transmit(uint8_t *data, uint16_t length)
 WIFI_ERROR_MESSAGE_t wifi_command_set_mode_to_2()
 {
     return wifi_command("AT+CWMODE=2", 1);
+}
+
+WIFI_ERROR_MESSAGE_t wifi_command_set_mode_to_3()
+{
+    return wifi_command("AT+CWMODE=3", 1);
 }
 
 WIFI_ERROR_MESSAGE_t wifi_command_enable_multiple_connections()
@@ -385,6 +395,4 @@ WIFI_ERROR_MESSAGE_t wifi_command_reset()
 {
     return wifi_command("AT+RST", 20);
 }
-
-
 #endif

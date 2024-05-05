@@ -19,12 +19,6 @@ jobs:
           python-version: "3.9"
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
-
-      - name: Install required packages
-        run: |
-          platformio pkg install -p framework-arduino-avr@latest
-          platformio pkg install -p toolchain-atmelavr@latest
-
       - name: Build default
         run: platformio run
       - name: Run target tests

@@ -7,6 +7,7 @@
 #include <clock.h>
 #include <util/delay.h>
 #include <logger.h>
+#include <lcd.h>
 
 void here()
 {

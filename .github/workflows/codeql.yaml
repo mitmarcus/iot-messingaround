@@ -1,4 +1,4 @@
-name: "CodeQL Analysis"
+name: "CodeQL"
 
 on:
   push:
@@ -26,37 +26,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Cache CodeQL CLI
-    - name: Cache CodeQL CLI
-      uses: actions/cache@v4
-      with:
-        path: /opt/hostedtoolcache/CodeQL
-        key: ${{ runner.os }}-codeql-cli-${{ hashFiles('**/codeql-cli-version.txt') }}
-
-    # Ensure CodeQL CLI is installed
-    - name: Install CodeQL CLI if needed
-      run: |
-        if ! codeql --version; then
-          sudo apt-get update
-          sudo apt-get install -y codeql
-        fi
-      # Optional: Save CodeQL CLI version to cache key for future runs
-    - name: Save CodeQL CLI version
-      run: codeql --version > codeql-cli-version.txt
-
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: c-cpp
 
-    # Cache other dependencies (PlatformIO, Python packages, etc.)
     - name: Cache dependencies
       uses: actions/cache@v4
       with:
         path: |
           ~/.cache/pip
           ~/.platformio/.cache
-        key: ${{ runner.os }}-pio-${{ hashFiles('platformio.ini') }}
+        key: ${{ runner.os }}-pio
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -65,7 +46,6 @@ jobs:
 
     - name: Install PlatformIO Core
       run: pip install --upgrade platformio
-
     - name: Build default
       run: platformio run
 

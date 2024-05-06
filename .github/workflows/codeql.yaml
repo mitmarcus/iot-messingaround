@@ -20,11 +20,6 @@ jobs:
       actions: read
       contents: read
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [c, cpp]
-
     timeout-minutes: 360  # Optional: set a timeout of 360 minutes (6 hours)
 
     steps:
@@ -34,7 +29,7 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${{ matrix.language }}
+        languages: c-cpp
         auto-upload: true
 
     - name: Cache dependencies

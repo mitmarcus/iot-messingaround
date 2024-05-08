@@ -5,7 +5,6 @@
 #include <state_coordinator.h>
 #include <display.h>
 #include <clock.h>
-#include <util/delay.h>
 #include <logger.h>
 #include <lcd.h>
 

@@ -2,7 +2,6 @@
 #include "ccp_protocol_test/test_ccp_protocol.h"
 #include "unity.h"
 
-
 int main(void)
 {
   UNITY_BEGIN();
@@ -12,6 +11,9 @@ int main(void)
   RUN_TEST(ccp_test_build_request_with_body);
   RUN_TEST(ccp_test_build_response_without_body);
   RUN_TEST(ccp_test_build_response_with_body);
+  RUN_TEST(ccp_test_at_from_str);
+  RUN_TEST(ccp_test_at_from_str2);
+
   return UNITY_END();
 }
 

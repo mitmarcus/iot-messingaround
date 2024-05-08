@@ -6,18 +6,21 @@
 
 void state_coordinator(State state)
 {
+    char *ip = "192.168.43.130";
+    int port = 8080;
+
     while (1)
     {
         switch (state)
         {
         case WIFI_CONNECT_STATE:
-            state_coordinator(connect_wifi_state_switch("ssid", "password"));
+            state_coordinator(connect_wifi_state_switch("hi123", "kacenka123"));
             break;
         case SERVER_CONNECT_STATE:
-            state_coordinator(connect_server_state_switch("192.168.28.4", 18));
+            state_coordinator(connect_server_state_switch(ip, port));
             break;
         case WORKING_STATE:
-            state_coordinator(working_state_switch());
+            state_coordinator(working_state_switch(ip, port));
             break;
         }
     }
@@ -25,6 +28,6 @@ void state_coordinator(State state)
 
 void start()
 {
-    clock_display_time();
-    state_coordinator(WORKING_STATE);
+    // clock_display_time();
+    state_coordinator(WIFI_CONNECT_STATE);
 }
